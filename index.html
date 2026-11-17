@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ceria Keluarga</title>
+<style>
+:root{--bg1:#ffe1f0;--bg2:#d6ecff;--card:#ffffffd9;--ink:#2d2a4a;--sub:#6b6890;--p:#7c5cff;--p2:#ff6fae;--ok:#2fbf71;--bad:#ff5d6c;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#2a1a3a;--bg2:#13233d;--card:#25223fd9;--ink:#f1efff;--sub:#b5b1d8}}
+:root[data-theme="dark"]{--bg1:#2a1a3a;--bg2:#13233d;--card:#25223fd9;--ink:#f1efff;--sub:#b5b1d8}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:"Nunito","Segoe UI",system-ui,sans-serif;color:var(--ink);background:linear-gradient(160deg,var(--bg1),var(--bg2));background-attachment:fixed;overflow-x:hidden}
+.bubbles span{position:fixed;bottom:-60px;border-radius:50%;background:#ffffff66;animation:rise linear infinite;z-index:0}
+@keyframes rise{to{transform:translateY(-110vh) rotate(90deg)}}
+main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:18px 16px 40px}
+h1{font-size:30px;margin:6px 0;text-align:center;background:linear-gradient(90deg,var(--p),var(--p2));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{margin:6px 0 12px;text-align:center}
+.card{background:var(--card);backdrop-filter:blur(8px);border-radius:24px;padding:20px;box-shadow:0 10px 30px #7c5cff26;margin:14px 0;animation:pop .4s ease}
+@keyframes pop{from{opacity:0;transform:scale(.94) translateY(10px)}}
+.hero{font-size:72px;text-align:center;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px) rotate(4deg)}}
+p.sub{color:var(--sub);text-align:center;margin:4px 0 12px}
+label{display:block;font-weight:800;margin:12px 0 6px}
+input{width:100%;padding:14px;border-radius:16px;border:2px solid #7c5cff44;background:var(--card);color:var(--ink);font:inherit;font-size:16px}
+input:focus{outline:none;border-color:var(--p)}
+.roles{display:flex;gap:8px}
+.roles button{flex:1;padding:10px 4px;font-size:14px}
+button{font:inherit;font-weight:800;border:0;border-radius:18px;padding:14px 18px;cursor:pointer;color:var(--ink);background:#7c5cff22;transition:transform .15s}
+button:active{transform:scale(.95)}
+button.on,.main-btn{background:linear-gradient(90deg,var(--p),var(--p2));color:#fff}
+.main-btn{width:100%;font-size:18px;margin-top:16px;box-shadow:0 8px 18px #ff6fae55}
+.err{color:var(--bad);font-weight:700;min-height:20px;text-align:center;margin-top:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{padding:22px 8px;border-radius:24px;color:#fff;font-size:17px;text-align:center;box-shadow:0 8px 20px #0002}
+.tile b{display:block;font-size:44px;animation:bob 3s ease-in-out infinite}
+.t1{background:linear-gradient(135deg,#7c5cff,#a58bff)}.t2{background:linear-gradient(135deg,#ff6fae,#ff9ac6)}
+.t3{background:linear-gradient(135deg,#ffb020,#ffd35c)}.t4{background:linear-gradient(135deg,#1fb6a6,#5fe0c8)}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;font-size:16px;background:#7c5cff1a}
+.opt.good{background:var(--ok);color:#fff}.opt.bad{background:var(--bad);color:#fff}
+.bar{height:10px;border-radius:9px;background:#7c5cff22;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--p),var(--p2));transition:width .4s}
+.big{font-size:20px;line-height:1.5;text-align:center;min-height:90px;display:flex;align-items:center;justify-content:center}
+.back{background:none;padding:6px 4px;color:var(--sub)}
+.row{display:flex;gap:10px}.row button{flex:1}
+.stage{height:190px;border-radius:20px;position:relative;overflow:hidden;margin-bottom:12px}
+.stage .a{position:absolute;font-size:60px;line-height:1}
+.sky{background:linear-gradient(#8fd3ff,#d8f4ff)}.river{background:linear-gradient(#8fd3ff 0 45%,#3b9fe0 45%)}.night{background:linear-gradient(#2c2a6e,#6a5acd)}.grass{background:linear-gradient(#bfe9ff 0 55%,#7ed48a 55%)}
+.hop{animation:hop 1.1s ease-in-out infinite}@keyframes hop{50%{transform:translateY(-26px)}}
+.swim{animation:swim 3.5s ease-in-out infinite alternate}@keyframes swim{to{transform:translateX(70px)}}
+.spin{animation:spin 6s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.twinkle{animation:tw 1.2s ease-in-out infinite alternate}@keyframes tw{to{opacity:.3;transform:scale(.7)}}
+.small{font-size:13px;color:var(--sub);text-align:center}
+</style>
+</head>
+<body>
+<div class="bubbles" id="bub"></div>
+<main id="app"></main>
+<script>
+(function(){
+var SHEET_URL="PASTE_URL_APPS_SCRIPT_DI_SINI";
+var ALLQ=[
+{q:"Apakah ibu negara Malaysia?",o:["Johor Bahru","Kuala Lumpur","Ipoh","Kota Kinabalu"],a:1},
+{q:"Planet manakah paling besar?",o:["Marikh","Bumi","Musytari","Zuhrah"],a:2},
+{q:"Berapakah 7 × 8?",o:["54","56","58","64"],a:1},
+{q:"Mamalia manakah yang boleh terbang?",o:["Helang","Lalat","Kelawar","Burung hantu"],a:2},
+{q:"Berapa warna ada pada pelangi?",o:["5","6","7","8"],a:2},
+{q:"Air membeku pada suhu berapa?",o:["0°C","10°C","50°C","100°C"],a:0},
+{q:"Gunung tertinggi di Malaysia ialah?",o:["Gunung Tahan","Gunung Kinabalu","Gunung Ledang","Gunung Jerai"],a:1},
+{q:"Warna apakah terhasil jika biru dicampur kuning?",o:["Jingga","Ungu","Hijau","Merah"],a:2},
+{q:"Apakah yang tumbuhan perlukan untuk membuat makanan?",o:["Cahaya matahari","Gula","Garam","Susu"],a:0},
+{q:"Siapakah Perdana Menteri pertama Malaysia?",o:["Tun Razak","Tunku Abdul Rahman","Tun Hussein Onn","Tun Dr. Mahathir"],a:1},
+{q:"Bahagian badan manakah mengepam darah?",o:["Paru-paru","Perut","Otak","Jantung"],a:3},
+{q:"Berapakah 15 + 27?",o:["41","42","43","52"],a:1},
+{q:"Bendera Malaysia dikenali sebagai?",o:["Jalur Gemilang","Sang Saka","Merah Putih","Bulan Bintang"],a:0},
+{q:"Haiwan terbesar di dunia ialah?",o:["Gajah","Jerung putih","Ikan paus biru","Jerapah"],a:2},
+{q:"Haiwan manakah dikenali sebagai raja rimba?",o:["Harimau kumbang","Singa","Beruang","Serigala"],a:1}];
+var QUIZ=ALLQ.slice(0,8);
+var ASK=["Apa perkara paling lucu yang pernah berlaku kepada kita?","Jika boleh ada kuasa luar biasa, kamu pilih kuasa apa?","Apa makanan kegemaran keluarga kita, dan kenapa?","Siapakah wira kamu, dan apa yang kamu kagumi?","Ke mana kita nak bercuti jika tiada had belanja?","Apa satu perkara baik yang kamu buat hari ini?","Apa cita-cita kamu bila dewasa nanti?","Apa satu perkara yang ibu bapa boleh buat supaya kamu lebih gembira?"];
+var JOKE=["Cikgu: Kenapa kamu lambat? Murid: Ada papan tanda, Sekolah di depan, perlahan-lahan! 😅","Kenapa buku matematik sedih? Sebab ada terlalu banyak masalah! 📚","Apa beza kucing dan komputer? Dua-dua ada tetikus, tapi kucing sahaja yang makan! 🐱","Ibu: Kenapa bilik berselerak? Anak: Itu bukan selerak, itu seni moden! 🎨","Apa yang naik tapi tak pernah turun? Umur! 🎂","Kenapa ikan tak pernah lewat ke sekolah? Sebab mereka sentiasa berenang bersama arus masa! 🐟"];
+var STORY=[
+{c:"sky",t:"Pada suatu hari, Sang Kancil kehausan. Sungai di seberang penuh dengan buah-buahan, tetapi sungai itu dijaga buaya yang lapar.",s:'<div class="a hop" style="left:20%;bottom:28px">🦌</div><div class="a twinkle" style="right:12%;top:14px">☀️</div><div class="a" style="right:18%;bottom:24px">🍎</div>'},
+{c:"river",t:"Kancil berpura-pura: Raja menyuruh saya mengira semua buaya! Berbaris ya, dari tebing ke tebing!",s:'<div class="a swim" style="left:10%;top:72px">🐊</div><div class="a swim" style="left:30%;top:100px;animation-delay:.5s">🐊</div><div class="a hop" style="left:8%;top:6px">🦌</div>'},
+{c:"grass",t:"Buaya-buaya pun berbaris. Kancil melompat di atas belakang mereka sambil mengira, satu, dua, tiga... sampai ke seberang!",s:'<div class="a hop" style="left:55%;top:60px">🦌</div><div class="a" style="left:12%;top:105px">🐊🐊🐊</div><div class="a twinkle" style="right:8%;top:10px">⭐</div>'},
+{c:"night",t:"Kancil makan buah sehingga kenyang. Pengajarannya, kebijaksanaan lebih hebat daripada kekuatan. Tamat! 🌙",s:'<div class="a spin" style="right:12%;top:12px">🌕</div><div class="a hop" style="left:38%;bottom:20px">🦌</div><div class="a twinkle" style="left:10%;top:20px">✨</div><div class="a twinkle" style="left:70%;top:80px">✨</div>'}];
+
+var app=document.getElementById("app"),P=null,score=0,qi=0,si=0,db=null,user=null,uid=null,isOwner=false;
+var bub=document.getElementById("bub");
+for(var i=0;i<14;i++){var b=document.createElement("span"),z=20+Math.random()*60;b.style.cssText="left:"+Math.random()*100+"%;width:"+z+"px;height:"+z+"px;animation-duration:"+(14+Math.random()*16)+"s;animation-delay:-"+Math.random()*20+"s";bub.appendChild(b)}
+
+function h(html){app.innerHTML=html;window.scrollTo(0,0)}
+function $(id){return document.getElementById(id)}
+function shuffle(a){return a.slice().sort(function(){return Math.random()-.5})}
+
+function save(extra){
+ if(!P)return;var d={name:P.name,phone:P.phone,peranan:P.role,skor:P.best||0,masa:new Date().toISOString()};
+ try{localStorage.setItem("ck",JSON.stringify(d))}catch(e){}
+ if(SHEET_URL.indexOf("http")===0){try{fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(d)}).catch(function(){})}catch(e){}}
+}
+
+function reg(){
+ var role="Kanak-kanak";
+ h('<div class="hero">🦄</div><h1>Ceria Keluarga</h1><p class="sub">Kuiz, lawak dan kisah ringkas untuk kanak-kanak, remaja dan ibu bapa</p>'+
+ '<div class="card"><label>Nama kamu</label><input id="nm" placeholder="Contoh: Aisyah" maxlength="40" autocomplete="name">'+
+ '<label>No. telefon</label><input id="ph" type="tel" inputmode="tel" placeholder="Contoh: 0123456789" maxlength="15" autocomplete="tel">'+
+ '<label>Saya seorang</label><div class="roles" id="rl"><button class="on">Kanak-kanak</button><button>Remaja</button><button>Ibu bapa</button></div>'+
+ '<div class="err" id="er"></div><button class="main-btn" id="go">Mula Bermain 🚀</button></div>');
+ var rs=$("rl").children;
+ [].forEach.call(rs,function(b){b.onclick=function(){[].forEach.call(rs,function(x){x.className=""});b.className="on";role=b.textContent}});
+ $("go").onclick=function(){
+  var n=$("nm").value.trim(),p=$("ph").value.replace(/[\s-]/g,"");
+  if(n.length<2){$("er").textContent="Sila isi nama dahulu ya 😊";return}
+  if(!/^\+?\d{9,13}$/.test(p)){$("er").textContent="No. telefon tidak sah. Contoh: 0123456789";return}
+  P={name:n,phone:p,role:role,best:0};save();home();
+ };
+}
+
+function home(){
+ h('<div class="hero">🎈</div><h1>Hai, <span id="hn"></span>!</h1><p class="sub">Pilih permainan kegemaran kamu</p>'+
+ '<div class="grid"><button class="tile t1" data-g="quiz"><b>🧠</b>Kuiz</button><button class="tile t2" data-g="ask"><b>💬</b>Soalan Keluarga</button>'+
+ '<button class="tile t3" data-g="joke"><b>😂</b>Lawak</button><button class="tile t4" data-g="story"><b>📖</b>Kisah Animasi</button></div>'+
+ '<p class="small" style="margin-top:16px">Skor terbaik: '+P.best+' / '+QUIZ.length+'</p>'+(isOwner?'<button class="main-btn" id="csv">⬇️ Muat turun senarai (CSV untuk Sheets)</button>':''));
+ $("hn").textContent=P.name;
+ [].forEach.call(document.querySelectorAll(".tile"),function(t){t.onclick=function(){({quiz:quiz,ask:ask,joke:joke,story:storyMenu})[t.dataset.g](0)}});
+ if(isOwner)$("csv").onclick=exportCsv;
+}
+function back(){return '<button class="back" id="bk">← Menu</button>'}
+function wireBack(){$("bk").onclick=home}
+
+function quiz(n){
+ if(n===0){qi=0;score=0;QUIZ=shuffle(ALLQ).slice(0,8)}
+ if(qi>=QUIZ.length){
+  if(score>P.best)P.best=score;save();
+  var e=score>=7?"🏆 Hebat sekali!":score>=4?"🌟 Bagus!":"💪 Cuba lagi!";
+  h(back()+'<div class="card"><div class="hero">'+e.split(" ")[0]+'</div><h2>'+e.split(" ").slice(1).join(" ")+'</h2><p class="sub">Skor kamu: '+score+' / '+QUIZ.length+'</p><button class="main-btn" id="ag">Main Lagi</button></div>');
+  wireBack();$("ag").onclick=function(){quiz(0)};return;
+ }
+ var q=QUIZ[qi];
+ h(back()+'<div class="bar"><i style="width:'+qi/QUIZ.length*100+'%"></i></div><div class="card"><p class="sub">Soalan '+(qi+1)+' / '+QUIZ.length+'</p><div class="big" style="min-height:70px"></div><div id="os"></div></div>');
+ wireBack();document.querySelector(".big").textContent=q.q;
+ q.o.forEach(function(t,i){var b=document.createElement("button");b.className="opt";b.textContent=t;
+  b.onclick=function(){var all=$("os").children;[].forEach.call(all,function(x,j){x.disabled=true;if(j===q.a)x.className="opt good"});
+   if(i===q.a)score++;else b.className="opt bad";setTimeout(function(){qi++;quiz(1)},1000)};
+  $("os").appendChild(b)});
+}
+
+var ai=0;
+function ask(){
+ h(back()+'<h2>💬 Soalan Keluarga</h2><p class="sub">Tanya dan jawab bersama-sama!</p><div class="card"><div class="big" id="bg"></div></div><button class="main-btn" id="nx">Soalan Seterusnya ✨</button>');
+ wireBack();var s=shuffle(ASK);var k=0;
+ function show(){$("bg").textContent=s[k%s.length];k++}show();$("nx").onclick=show;
+}
+function joke(){
+ h(back()+'<h2>😂 Lawak Ceria</h2><div class="card"><div class="hero" style="font-size:56px">🤣</div><div class="big" id="bg"></div></div><button class="main-btn" id="nx">Lagi Lawak! 🎉</button>');
+ wireBack();var s=shuffle(JOKE),k=0;
+ function show(){$("bg").textContent=s[k%s.length];k++}show();$("nx").onclick=show;
+}
+var KANCIL=STORY.slice(),STITLE="Sang Kancil dan Buaya";
+var KURA=[
+{c:"grass",t:"Arnab selalu bangga dengan kepantasannya. Kura-kura pun mencabar, Mari berlumba sampai ke pokok besar!",s:'<div class="a" style="left:8%;bottom:30px">🐇</div><div class="a" style="left:22%;bottom:30px">🐢</div><div class="a" style="right:8%;bottom:30px">🌳</div>'},
+{c:"sky",t:"Lumba pun bermula! Arnab berlari laju dan jauh meninggalkan kura-kura di belakang.",s:'<div class="a swim hop" style="left:10%;bottom:40px">🐇</div><div class="a" style="left:8%;bottom:6px">🐢</div><div class="a twinkle" style="right:10%;top:10px">☀️</div>'},
+{c:"grass",t:"Arnab terlalu yakin lalu tidur di bawah pokok. Kura-kura terus berjalan perlahan-lahan tanpa berhenti.",s:'<div class="a twinkle" style="left:40%;top:30px">💤</div><div class="a" style="left:42%;top:70px">🐇</div><div class="a swim" style="left:5%;bottom:20px">🐢</div>'},
+{c:"night",t:"Kura-kura sampai dahulu! Pengajarannya, usaha yang berterusan mengalahkan sikap sombong. Tamat! 🏆",s:'<div class="a hop" style="left:42%;bottom:30px">🐢</div><div class="a twinkle" style="left:15%;top:20px">🎉</div><div class="a twinkle" style="right:15%;top:20px">🏆</div>'}];
+var BINTANG=[
+{c:"night",t:"Bintang Kecil terjatuh dari langit dan tersesat di taman. Dia menangis kerana mahu pulang.",s:'<div class="a hop" style="left:42%;top:60px">⭐</div><div class="a" style="left:8%;bottom:10px">🌳</div><div class="a" style="right:8%;bottom:10px">🌳</div>'},
+{c:"night",t:"Kunang-kunang datang membantu. Jangan sedih, kami akan bersinar bersama supaya kamu nampak jalan!",s:'<div class="a twinkle" style="left:15%;top:40px">✨</div><div class="a twinkle" style="left:45%;top:100px">✨</div><div class="a twinkle" style="right:15%;top:50px">✨</div><div class="a hop" style="left:40%;top:20px">⭐</div>'},
+{c:"night",t:"Burung hantu yang bijak menunjuk ke arah bukit tertinggi. Naiklah ke sana, katanya.",s:'<div class="a" style="left:12%;top:30px">🦉</div><div class="a" style="right:10%;bottom:6px">⛰️</div><div class="a hop" style="left:45%;bottom:20px">⭐</div>'},
+{c:"night",t:"Bintang Kecil bersinar semula di langit. Pengajarannya, kawan yang baik sentiasa membantu. Tamat! 🌟",s:'<div class="a spin" style="right:12%;top:12px">🌕</div><div class="a twinkle" style="left:20%;top:30px">⭐</div><div class="a twinkle" style="left:45%;top:80px">⭐</div><div class="a twinkle" style="left:70%;top:110px">⭐</div>'}];
+function storyMenu(){
+ h(back()+'<h2>📖 Pilih Kisah</h2><div class="card"><button class="opt" data-i="0">🦌 Sang Kancil dan Buaya</button><button class="opt" data-i="1">🐢 Kura-kura dan Arnab</button><button class="opt" data-i="2">⭐ Bintang yang Hilang</button></div>');
+ wireBack();
+ var L=[[KANCIL,"Sang Kancil dan Buaya"],[KURA,"Kura-kura dan Arnab"],[BINTANG,"Bintang yang Hilang"]];
+ [].forEach.call(document.querySelectorAll(".opt"),function(b){b.onclick=function(){var x=L[+b.dataset.i];STORY=x[0];STITLE=x[1];story(0)}});
+}
+function story(n){
+ if(typeof n!=="number")n=0;si=n;var s=STORY[si];
+ h(back()+'<h2>📖 '+STITLE+'</h2><div class="stage '+s.c+'">'+s.s+'</div><div class="card"><div class="big" id="bg" style="min-height:110px;font-size:18px"></div></div>'+
+ '<div class="row"><button id="pv"'+(si===0?' disabled style="opacity:.4"':'')+'>← Kembali</button><button class="main-btn" style="margin:0" id="nx">'+(si===STORY.length-1?'Tamat 🎉':'Seterusnya →')+'</button></div>');
+ wireBack();$("bg").textContent=s.t;
+ $("pv").onclick=function(){if(si>0)story(si-1)};
+ $("nx").onclick=function(){si===STORY.length-1?home():story(si+1)};
+}
+function exportCsv(){
+ db.collection("players").get().then(function(snap){
+  var rows=[["Nama","Telefon","Peranan","Skor","Masa"]];
+  snap.docs.forEach(function(d){var x=d.data();rows.push([x.name,"'"+x.phone,x.peranan,x.skor,x.masa])});
+  var csv="\ufeff"+rows.map(function(r){return r.map(function(c){return '"'+String(c==null?"":c).replace(/"/g,'""')+'"'}).join(",")}).join("\n");
+  return claude.use("downloads").then(function(dl){return dl?dl.save({filename:"pemain-ceria-keluarga.csv",data:csv}):null});
+ }).catch(function(){alert("Tidak dapat memuat turun senarai buat masa ini.")});
+}
+
+reg();
+if(window.claude&&claude.use){
+ claude.use("user").then(function(u){user=u;if(u){u.isOwner().then(function(o){isOwner=o});u.id().then(function(i){uid=i})}}).catch(function(){});
+ claude.use("db").then(function(d){db=d}).catch(function(){});
+}
+})();
+</script>
+</body>
+</html>
