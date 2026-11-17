@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ceria Keluarga</title>
 <style>
-:root{--bg1:#ffe1f0;--bg2:#d6ecff;--card:#ffffffd9;--ink:#2d2a4a;--sub:#6b6890;--p:#7c5cff;--p2:#ff6fae;--ok:#2fbf71;--bad:#ff5d6c;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--bg1:#ffe1f0;--bg2:#d6ecff;--card:#ffffffd9;--ink:#2d2a4a;--sub:#6b6890;--p:#7c5cff;--p2:#ff6fae;--ok:#2fbf71;--bad:#ff5d6c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#2a1a3a;--bg2:#13233d;--card:#25223fd9;--ink:#f1efff;--sub:#b5b1d8}}
 :root[data-theme="dark"]{--bg1:#2a1a3a;--bg2:#13233d;--card:#25223fd9;--ink:#f1efff;--sub:#b5b1d8}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -23,9 +22,9 @@ h2{margin:6px 0 12px;text-align:center}
 @keyframes bob{50%{transform:translateY(-10px) rotate(4deg)}}
 p.sub{color:var(--sub);text-align:center;margin:4px 0 12px}
 label{display:block;font-weight:800;margin:12px 0 6px}
-input{width:100%;padding:14px;border-radius:16px;border:2px solid #7c5cff44;background:var(--card);color:var(--ink);font:inherit;font-size:16px}
+input,select{width:100%;padding:14px;border-radius:16px;border:2px solid #7c5cff44;background:var(--card);color:var(--ink);font:inherit;font-size:16px}
 input:focus{outline:none;border-color:var(--p)}
-.roles{display:flex;gap:8px}
+.roles{display:flex;gap:8px;margin-bottom:8px}
 .roles button{flex:1;padding:10px 4px;font-size:14px}
 button{font:inherit;font-weight:800;border:0;border-radius:18px;padding:14px 18px;cursor:pointer;color:var(--ink);background:#7c5cff22;transition:transform .15s}
 button:active{transform:scale(.95)}
@@ -50,7 +49,11 @@ button.on,.main-btn{background:linear-gradient(90deg,var(--p),var(--p2));color:#
 .swim{animation:swim 3.5s ease-in-out infinite alternate}@keyframes swim{to{transform:translateX(70px)}}
 .spin{animation:spin 6s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 .twinkle{animation:tw 1.2s ease-in-out infinite alternate}@keyframes tw{to{opacity:.3;transform:scale(.7)}}
+.rk{display:flex;justify-content:space-between;padding:10px 4px;border-bottom:1px solid #7c5cff22}
 .small{font-size:13px;color:var(--sub);text-align:center}
+.lesson{background:#2fbf7122;border:2px dashed var(--ok);border-radius:16px;padding:10px 12px;text-align:center;font-weight:700;margin-top:10px}
+.xo{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.xo button{font-size:36px;height:90px;padding:0;background:#7c5cff1a}
+.ld{display:flex;gap:4px;margin:8px 0}.ld i{flex:1;height:8px;border-radius:5px;background:#7c5cff22}.ld i.d{background:var(--ok)}.ld i.c{background:var(--p2)}
 </style>
 </head>
 <body>
@@ -75,34 +78,67 @@ var ALLQ=[
 {q:"Bendera Malaysia dikenali sebagai?",o:["Jalur Gemilang","Sang Saka","Merah Putih","Bulan Bintang"],a:0},
 {q:"Haiwan terbesar di dunia ialah?",o:["Gajah","Jerung putih","Ikan paus biru","Jerapah"],a:2},
 {q:"Haiwan manakah dikenali sebagai raja rimba?",o:["Harimau kumbang","Singa","Beruang","Serigala"],a:1}];
-var QUIZ=ALLQ.slice(0,8);
-var ASK=["Apa perkara paling lucu yang pernah berlaku kepada kita?","Jika boleh ada kuasa luar biasa, kamu pilih kuasa apa?","Apa makanan kegemaran keluarga kita, dan kenapa?","Siapakah wira kamu, dan apa yang kamu kagumi?","Ke mana kita nak bercuti jika tiada had belanja?","Apa satu perkara baik yang kamu buat hari ini?","Apa cita-cita kamu bila dewasa nanti?","Apa satu perkara yang ibu bapa boleh buat supaya kamu lebih gembira?"];
-var JOKE=["Cikgu: Kenapa kamu lambat? Murid: Ada papan tanda, Sekolah di depan, perlahan-lahan! 😅","Kenapa buku matematik sedih? Sebab ada terlalu banyak masalah! 📚","Apa beza kucing dan komputer? Dua-dua ada tetikus, tapi kucing sahaja yang makan! 🐱","Ibu: Kenapa bilik berselerak? Anak: Itu bukan selerak, itu seni moden! 🎨","Apa yang naik tapi tak pernah turun? Umur! 🎂","Kenapa ikan tak pernah lewat ke sekolah? Sebab mereka sentiasa berenang bersama arus masa! 🐟"];
+var QUIZ=ALLQ.slice(0,8),POOL=ALLQ;
+var IQ=[
+{q:"Nombor seterusnya? 2, 4, 8, 16, ?",o:["24","30","32","64"],a:2,e:"Setiap nombor didarab 2."},
+{q:"Ahmad lebih tinggi daripada Ali. Ali lebih tinggi daripada Siti. Siapa paling pendek?",o:["Ahmad","Ali","Siti","Sama sahaja"],a:2,e:"Susunan: Ahmad > Ali > Siti."},
+{q:"3 kucing tangkap 3 tikus dalam 3 minit. Berapa minit untuk 100 kucing tangkap 100 tikus?",o:["3","33","100","300"],a:0,e:"Setiap kucing menangkap 1 tikus dalam 3 minit."},
+{q:"Nombor seterusnya? 1, 1, 2, 3, 5, 8, ?",o:["11","12","13","14"],a:2,e:"Tambah dua nombor sebelumnya."},
+{q:"Aku ada bandar tetapi tiada rumah, ada sungai tetapi tiada air. Apakah aku?",o:["Peta","Mimpi","Lukisan","Buku"],a:0,e:"Peta menunjukkan bandar dan sungai, tetapi bukan yang sebenar."},
+{q:"Apakah yang makin dikongsi, makin bertambah?",o:["Duit","Ilmu","Makanan","Air"],a:1,e:"Ilmu bertambah bila dikongsi."},
+{q:"Hari ini Isnin. Apakah hari 3 hari selepas lusa?",o:["Jumaat","Sabtu","Ahad","Khamis"],a:1,e:"Lusa ialah Rabu, tambah 3 hari menjadi Sabtu."},
+{q:"Mana satu yang berbeza? 🍎 🍌 🍇 🚗",o:["🍎","🍌","🍇","🚗"],a:3,e:"Tiga lagi ialah buah-buahan."},
+{q:"Kamu berlumba lari dan memintas orang yang di tempat ke-2. Kamu di tempat ke berapa sekarang? 🏃",o:["1","2","3","Terbang"],a:1,e:"Kamu ambil tempat orang itu, jadi kamu ke-2. Bukan nombor 1 ya! 😄"},
+{q:"Pak Mat ada 3 anak perempuan. Setiap anak perempuan ada seorang abang. Berapa anak Pak Mat?",o:["3","4","6","7"],a:1,e:"Abang mereka sama orang, jadi 3 + 1 = 4. Abang pun kena kongsi! 😂"},
+{q:"Apa yang ada 4 kaki tetapi tidak boleh berjalan, dan tak pernah penat?",o:["Kucing tidur","Meja","Katil bunga","Kura-kura"],a:1,e:"Meja! Dia berdiri sepanjang hari tanpa mengeluh. 🪑"},
+{q:"Apa yang ada banyak kunci tetapi tak boleh buka pintu?",o:["Piano","Rantai","Pintu","Poket"],a:0,e:"Piano ada kunci not, bukan kunci pintu. 🎹"},
+{q:"Katak jatuh ke perigi 5 meter. Setiap hari melompat naik 3m, malam tergelincir turun 2m. Hari ke berapa katak keluar? 🐸",o:["Hari ke-2","Hari ke-3","Hari ke-4","Hari ke-5"],a:1,e:"Hari 1: 3 → 1. Hari 2: 4 → 2. Hari 3: 5 sampai! Tak sempat tergelincir."},
+{q:"Mana lebih berat: 1 kg kapas atau 1 kg besi?",o:["Besi","Kapas","Sama berat","Tergantung cuaca"],a:2,e:"Dua-dua 1 kg. Cuma kapas lebih berkembang! 🧶"},
+{q:"Berapa bulan ada 28 hari?",o:["1","2","6","12"],a:3,e:"Semua bulan ada sekurang-kurangnya 28 hari! 📅"},
+{q:"Ayam jantan bertelur di atas bumbung condong. Telur jatuh ke arah mana? 🐓",o:["Kiri","Kanan","Depan","Ayam jantan tak bertelur"],a:3,e:"Soalan helah! Ayam jantan tidak bertelur. 🥚"}];
+var ADABQ=[
+{q:"Apakah yang kita baca sebelum makan?",o:["Bismillah","Alhamdulillah","Subhanallah","Astaghfirullah"],a:0,e:"Bismillah sebelum makan mengundang keberkatan."},
+{q:"Kita makan dan minum menggunakan tangan yang mana?",o:["Kiri","Kanan","Mana-mana","Kedua-duanya"],a:1,e:"Rasulullah SAW menggalakkan tangan kanan untuk makan dan minum."},
+{q:"Apa jawapan bila orang memberi salam Assalamualaikum?",o:["Terima kasih","Waalaikumussalam","Selamat pagi","Hai"],a:1,e:"Menjawab salam hukumnya wajib."},
+{q:"Siapakah yang paling utama kita layan dengan baik?",o:["Kawan","Jiran","Ibu","Cikgu"],a:2,e:"Dalam hadis, ibu disebut tiga kali, kemudian bapa."},
+{q:"Apa yang kita ucapkan selepas makan?",o:["Bismillah","Alhamdulillah","Wah sedapnya","Tak apa"],a:1,e:"Kita bersyukur kepada Allah atas rezeki."},
+{q:"Jika kita melukakan hati kawan, apa yang patut dibuat?",o:["Diamkan diri","Minta maaf","Marah balik","Lari"],a:1,e:"Meminta maaf dan memaafkan ialah akhlak mulia."},
+{q:"Berapa kali solat fardu dalam sehari semalam?",o:["3","4","5","6"],a:2,e:"Subuh, Zohor, Asar, Maghrib dan Isyak."},
+{q:"Sifat Nabi yang bermaksud benar ialah?",o:["Amanah","Siddiq","Tabligh","Fatanah"],a:1,e:"Siddiq benar, Amanah dipercayai, Tabligh menyampaikan, Fatanah bijaksana."},
+{q:"Apa yang kita ucapkan bila bersin?",o:["Alhamdulillah","Bismillah","Allahu Akbar","Wah!"],a:0,e:"Orang yang bersin ucap Alhamdulillah, kawannya jawab Yarhamukallah."},
+{q:"Jika kita terjumpa dompet orang di jalan, apa yang patut dibuat?",o:["Ambil duit","Pulangkan kepada pemiliknya","Biarkan","Simpan"],a:1,e:"Amanah dan jujur itu sifat orang beriman."},
+{q:"Surah pertama dalam Al-Quran ialah?",o:["Al-Ikhlas","An-Nas","Al-Fatihah","Al-Baqarah"],a:2,e:"Al-Fatihah dibaca dalam setiap rakaat solat."},
+{q:"Apabila orang tua masuk ke dalam bilik, apa yang elok kita buat?",o:["Terus main game","Bangun dan hormati","Buat tak tahu","Lari"],a:1,e:"Menghormati orang tua ialah adab yang disukai Allah."},
+{q:"Bila kita mahu masuk ke rumah orang, apa yang patut dilakukan dahulu?",o:["Terus masuk","Beri salam dan minta izin","Menjerit","Ketuk jendela"],a:1,e:"Beri salam dan minta izin, sesuai dengan ajaran Islam."}];
+
+var ASK=["Apa perkara paling lucu yang pernah berlaku kepada kita?","Jika boleh ada kuasa luar biasa, kamu pilih kuasa apa?","Apa makanan kegemaran keluarga kita, dan kenapa?","Siapakah wira kamu, dan apa yang kamu kagumi?","Ke mana kita nak bercuti jika tiada had belanja?","Apa satu perkara baik yang kamu buat hari ini?","Apa cita-cita kamu bila dewasa nanti?","Apa satu perkara yang ibu bapa boleh buat supaya kamu lebih gembira?","Siapa yang paling kamu rasa nak ucap terima kasih hari ini, dan kenapa?","Apa doa yang kamu mahu keluarga kita sentiasa baca bersama?","Kalau kamu jadi ketua keluarga sehari, apa peraturan pertama kamu?","Apa kisah Nabi atau sahabat yang paling kamu suka, dan apa yang kita boleh belajar?"];
+var JOKE=["Apa yang ada kepala dan ekor tetapi tiada badan? Duit syiling! 🪙","Cikgu: 5 burung di pokok, tembak 1, tinggal berapa? Murid: Kosong cikgu, yang lain terbang! 🐦","Kenapa Ali bawa tangga ke sekolah? Sebab nak naik kelas! 🪜","Doktor: Kurangkan main telefon. Pesakit: Tapi doktor, saya baca nasihat ini di telefon! 📱","Apa yang makin basah bila mengeringkan? Tuala! 🧺","Cikgu: Kenapa kamu lambat? Murid: Ada papan tanda, Sekolah di depan, perlahan-lahan! 😅","Kenapa buku matematik sedih? Sebab ada terlalu banyak masalah! 📚","Apa beza kucing dan komputer? Dua-dua ada tetikus, tapi kucing sahaja yang makan! 🐱","Ibu: Kenapa bilik berselerak? Anak: Itu bukan selerak, itu seni moden! 🎨","Apa yang naik tapi tak pernah turun? Umur! 🎂","Kenapa ikan tak pernah lewat ke sekolah? Sebab mereka sentiasa berenang bersama arus masa! 🐟","Kenapa ayam menyeberang jalan? Nak tunjuk dia bukan penakut, cuma lapar! 🐔","Apa jadi kalau hantu masuk lif? Dia naik semangat! 👻","Ayah: Kenapa nilai ujian kamu rendah? Anak: Sebab soalan susah, ayah, saya cuma jawab yang senang. 😆","Apa bunyi bila durian jatuh atas kepala? Aduh, tapi sedap! 😂"];
 var STORY=[
 {c:"sky",t:"Pada suatu hari, Sang Kancil kehausan. Sungai di seberang penuh dengan buah-buahan, tetapi sungai itu dijaga buaya yang lapar.",s:'<div class="a hop" style="left:20%;bottom:28px">🦌</div><div class="a twinkle" style="right:12%;top:14px">☀️</div><div class="a" style="right:18%;bottom:24px">🍎</div>'},
 {c:"river",t:"Kancil berpura-pura: Raja menyuruh saya mengira semua buaya! Berbaris ya, dari tebing ke tebing!",s:'<div class="a swim" style="left:10%;top:72px">🐊</div><div class="a swim" style="left:30%;top:100px;animation-delay:.5s">🐊</div><div class="a hop" style="left:8%;top:6px">🦌</div>'},
 {c:"grass",t:"Buaya-buaya pun berbaris. Kancil melompat di atas belakang mereka sambil mengira, satu, dua, tiga... sampai ke seberang!",s:'<div class="a hop" style="left:55%;top:60px">🦌</div><div class="a" style="left:12%;top:105px">🐊🐊🐊</div><div class="a twinkle" style="right:8%;top:10px">⭐</div>'},
-{c:"night",t:"Kancil makan buah sehingga kenyang. Pengajarannya, kebijaksanaan lebih hebat daripada kekuatan. Tamat! 🌙",s:'<div class="a spin" style="right:12%;top:12px">🌕</div><div class="a hop" style="left:38%;bottom:20px">🦌</div><div class="a twinkle" style="left:10%;top:20px">✨</div><div class="a twinkle" style="left:70%;top:80px">✨</div>'}];
+{c:"night",t:"Kancil makan buah sehingga kenyang. Pengajarannya, kebijaksanaan lebih hebat daripada kekuatan. Tamat! 🌙",s:'<div class="a spin" style="right:12%;top:12px">🌕</div><div class="a hop" style="left:38%;bottom:20px">🦌</div><div class="a twinkle" style="left:10%;top:20px">✨</div><div class="a twinkle" style="left:70%;top:80px">✨</div>',l:"Kebijaksanaan lebih hebat daripada kekuatan."}];
 
-var app=document.getElementById("app"),P=null,score=0,qi=0,si=0,db=null,user=null,uid=null,isOwner=false;
+var app=document.getElementById("app"),P=null,score=0,qi=0,si=0,raf=0,tm=0;
 var bub=document.getElementById("bub");
 for(var i=0;i<14;i++){var b=document.createElement("span"),z=20+Math.random()*60;b.style.cssText="left:"+Math.random()*100+"%;width:"+z+"px;height:"+z+"px;animation-duration:"+(14+Math.random()*16)+"s;animation-delay:-"+Math.random()*20+"s";bub.appendChild(b)}
 
 function h(html){app.innerHTML=html;window.scrollTo(0,0)}
 function $(id){return document.getElementById(id)}
 function shuffle(a){return a.slice().sort(function(){return Math.random()-.5})}
-
-function save(extra){
- if(!P)return;var d={name:P.name,phone:P.phone,peranan:P.role,skor:P.best||0,masa:new Date().toISOString()};
+function total(){var t=0;for(var k in P.sc)t+=P.sc[k];return t}
+function addScore(k,v){if(v>(P.sc[k]||0))P.sc[k]=v;save()}
+function save(){
+ if(!P)return;var d={name:P.name,phone:P.phone,peranan:P.role,keluarga:P.fam,sc:P.sc,masa:new Date().toISOString()};
  try{localStorage.setItem("ck",JSON.stringify(d))}catch(e){}
  if(SHEET_URL.indexOf("http")===0){try{fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(d)}).catch(function(){})}catch(e){}}
 }
-
 function reg(){
  var role="Kanak-kanak";
- h('<div class="hero">🦄</div><h1>Ceria Keluarga</h1><p class="sub">Kuiz, lawak dan kisah ringkas untuk kanak-kanak, remaja dan ibu bapa</p>'+
+ h('<div class="hero">🦄</div><h1>Ceria Keluarga</h1><p class="sub">Kuiz, game, lawak dan kisah untuk kanak-kanak, remaja dan ibu bapa</p>'+
  '<div class="card"><label>Nama kamu</label><input id="nm" placeholder="Contoh: Aisyah" maxlength="40" autocomplete="name">'+
  '<label>No. telefon</label><input id="ph" type="tel" inputmode="tel" placeholder="Contoh: 0123456789" maxlength="15" autocomplete="tel">'+
+ '<label>Nama keluarga (pilihan, untuk ranking keluarga)</label><input id="fm" placeholder="Contoh: Keluarga Ahmad" maxlength="25">'+
  '<label>Saya seorang</label><div class="roles" id="rl"><button class="on">Kanak-kanak</button><button>Remaja</button><button>Ibu bapa</button></div>'+
  '<div class="err" id="er"></div><button class="main-btn" id="go">Mula Bermain 🚀</button></div>');
  var rs=$("rl").children;
@@ -111,40 +147,39 @@ function reg(){
   var n=$("nm").value.trim(),p=$("ph").value.replace(/[\s-]/g,"");
   if(n.length<2){$("er").textContent="Sila isi nama dahulu ya 😊";return}
   if(!/^\+?\d{9,13}$/.test(p)){$("er").textContent="No. telefon tidak sah. Contoh: 0123456789";return}
-  P={name:n,phone:p,role:role,best:0};save();home();
+  P={name:n,phone:p,role:role,fam:$("fm").value.trim(),sc:{}};
+  try{var o=JSON.parse(localStorage.getItem("ck")||"null");if(o&&o.phone===p&&o.sc)P.sc=o.sc}catch(e){}
+  save();home();
  };
 }
-
 function home(){
- h('<div class="hero">🎈</div><h1>Hai, <span id="hn"></span>!</h1><p class="sub">Pilih permainan kegemaran kamu</p>'+
- '<div class="grid"><button class="tile t1" data-g="quiz"><b>🧠</b>Kuiz</button><button class="tile t2" data-g="ask"><b>💬</b>Soalan Keluarga</button>'+
- '<button class="tile t3" data-g="joke"><b>😂</b>Lawak</button><button class="tile t4" data-g="story"><b>📖</b>Kisah Animasi</button></div>'+
- '<p class="small" style="margin-top:16px">Skor terbaik: '+P.best+' / '+QUIZ.length+'</p>'+(isOwner?'<button class="main-btn" id="csv">⬇️ Muat turun senarai (CSV untuk Sheets)</button>':''));
- $("hn").textContent=P.name;
- [].forEach.call(document.querySelectorAll(".tile"),function(t){t.onclick=function(){({quiz:quiz,ask:ask,joke:joke,story:storyMenu})[t.dataset.g](0)}});
- if(isOwner)$("csv").onclick=exportCsv;
+ var T=[["🧠","Kuiz",function(){POOL=ALLQ;quiz(0)}],["🧩","Kuiz IQ Lucu",function(){POOL=IQ;quiz(0)}],["🕌","Adab & Agama",function(){POOL=ADABQ;quiz(0)}],["🎮","Game",gameMenu],["💬","Soalan Keluarga",ask],["😂","Lawak",joke],["📖","Kisah",storyMenu],["🏆","Ranking",rank]];
+ h('<div class="hero">🎈</div><h1>Hai, <span id="hn"></span>!</h1><p class="sub">Mata anda: <b id="pt"></b></p><div class="grid" id="gd"></div>');
+ $("hn").textContent=P.name;$("pt").textContent=total();
+ T.forEach(function(x,i){var b=document.createElement("button");b.className="tile t"+(i%4+1);b.innerHTML="<b></b>";b.firstChild.textContent=x[0];b.appendChild(document.createTextNode(x[1]));b.onclick=x[2];$("gd").appendChild(b)});
 }
 function back(){return '<button class="back" id="bk">← Menu</button>'}
-function wireBack(){$("bk").onclick=home}
+function wireBack(){$("bk").onclick=function(){cancelAnimationFrame(raf);raf=-1;clearInterval(tm);home()}}
 
 function quiz(n){
- if(n===0){qi=0;score=0;QUIZ=shuffle(ALLQ).slice(0,8)}
+ var K=POOL===IQ?"iq":POOL===ADABQ?"adab":"quiz";
+ if(n===0){qi=0;score=0;QUIZ=shuffle(POOL).slice(0,8)}
  if(qi>=QUIZ.length){
-  if(score>P.best)P.best=score;save();
+  addScore(K,score*5);
   var e=score>=7?"🏆 Hebat sekali!":score>=4?"🌟 Bagus!":"💪 Cuba lagi!";
   h(back()+'<div class="card"><div class="hero">'+e.split(" ")[0]+'</div><h2>'+e.split(" ").slice(1).join(" ")+'</h2><p class="sub">Skor kamu: '+score+' / '+QUIZ.length+'</p><button class="main-btn" id="ag">Main Lagi</button></div>');
   wireBack();$("ag").onclick=function(){quiz(0)};return;
  }
  var q=QUIZ[qi];
- h(back()+'<div class="bar"><i style="width:'+qi/QUIZ.length*100+'%"></i></div><div class="card"><p class="sub">Soalan '+(qi+1)+' / '+QUIZ.length+'</p><div class="big" style="min-height:70px"></div><div id="os"></div></div>');
+ h(back()+'<div class="bar"><i style="width:'+qi/QUIZ.length*100+'%"></i></div><div class="card"><p class="sub">Soalan '+(qi+1)+' / '+QUIZ.length+'</p><div class="big" style="min-height:70px"></div><div id="os"></div><div id="ex"></div></div>');
  wireBack();document.querySelector(".big").textContent=q.q;
  q.o.forEach(function(t,i){var b=document.createElement("button");b.className="opt";b.textContent=t;
-  b.onclick=function(){var all=$("os").children;[].forEach.call(all,function(x,j){x.disabled=true;if(j===q.a)x.className="opt good"});
-   if(i===q.a)score++;else b.className="opt bad";setTimeout(function(){qi++;quiz(1)},1000)};
+  b.onclick=function(){[].forEach.call($("os").children,function(x,j){x.disabled=true;if(j===q.a)x.className="opt good"});
+   if(i===q.a)score++;else b.className="opt bad";
+   if(q.e){var x=$("ex");x.innerHTML='<p class="sub"></p><button class="main-btn" id="nq">Seterusnya →</button>';x.firstChild.textContent=(i===q.a?"✅ ":"❌ ")+"💡 "+q.e;$("nq").onclick=function(){qi++;quiz(1)}}
+   else setTimeout(function(){qi++;quiz(1)},1000)};
   $("os").appendChild(b)});
 }
-
-var ai=0;
 function ask(){
  h(back()+'<h2>💬 Soalan Keluarga</h2><p class="sub">Tanya dan jawab bersama-sama!</p><div class="card"><div class="big" id="bg"></div></div><button class="main-btn" id="nx">Soalan Seterusnya ✨</button>');
  wireBack();var s=shuffle(ASK);var k=0;
@@ -160,40 +195,156 @@ var KURA=[
 {c:"grass",t:"Arnab selalu bangga dengan kepantasannya. Kura-kura pun mencabar, Mari berlumba sampai ke pokok besar!",s:'<div class="a" style="left:8%;bottom:30px">🐇</div><div class="a" style="left:22%;bottom:30px">🐢</div><div class="a" style="right:8%;bottom:30px">🌳</div>'},
 {c:"sky",t:"Lumba pun bermula! Arnab berlari laju dan jauh meninggalkan kura-kura di belakang.",s:'<div class="a swim hop" style="left:10%;bottom:40px">🐇</div><div class="a" style="left:8%;bottom:6px">🐢</div><div class="a twinkle" style="right:10%;top:10px">☀️</div>'},
 {c:"grass",t:"Arnab terlalu yakin lalu tidur di bawah pokok. Kura-kura terus berjalan perlahan-lahan tanpa berhenti.",s:'<div class="a twinkle" style="left:40%;top:30px">💤</div><div class="a" style="left:42%;top:70px">🐇</div><div class="a swim" style="left:5%;bottom:20px">🐢</div>'},
-{c:"night",t:"Kura-kura sampai dahulu! Pengajarannya, usaha yang berterusan mengalahkan sikap sombong. Tamat! 🏆",s:'<div class="a hop" style="left:42%;bottom:30px">🐢</div><div class="a twinkle" style="left:15%;top:20px">🎉</div><div class="a twinkle" style="right:15%;top:20px">🏆</div>'}];
+{c:"night",t:"Kura-kura sampai dahulu! Pengajarannya, usaha yang berterusan mengalahkan sikap sombong. Tamat! 🏆",s:'<div class="a hop" style="left:42%;bottom:30px">🐢</div><div class="a twinkle" style="left:15%;top:20px">🎉</div><div class="a twinkle" style="right:15%;top:20px">🏆</div>',l:"Sombong itu dibenci Allah, usaha yang berterusan membawa kejayaan."}];
 var BINTANG=[
 {c:"night",t:"Bintang Kecil terjatuh dari langit dan tersesat di taman. Dia menangis kerana mahu pulang.",s:'<div class="a hop" style="left:42%;top:60px">⭐</div><div class="a" style="left:8%;bottom:10px">🌳</div><div class="a" style="right:8%;bottom:10px">🌳</div>'},
 {c:"night",t:"Kunang-kunang datang membantu. Jangan sedih, kami akan bersinar bersama supaya kamu nampak jalan!",s:'<div class="a twinkle" style="left:15%;top:40px">✨</div><div class="a twinkle" style="left:45%;top:100px">✨</div><div class="a twinkle" style="right:15%;top:50px">✨</div><div class="a hop" style="left:40%;top:20px">⭐</div>'},
 {c:"night",t:"Burung hantu yang bijak menunjuk ke arah bukit tertinggi. Naiklah ke sana, katanya.",s:'<div class="a" style="left:12%;top:30px">🦉</div><div class="a" style="right:10%;bottom:6px">⛰️</div><div class="a hop" style="left:45%;bottom:20px">⭐</div>'},
-{c:"night",t:"Bintang Kecil bersinar semula di langit. Pengajarannya, kawan yang baik sentiasa membantu. Tamat! 🌟",s:'<div class="a spin" style="right:12%;top:12px">🌕</div><div class="a twinkle" style="left:20%;top:30px">⭐</div><div class="a twinkle" style="left:45%;top:80px">⭐</div><div class="a twinkle" style="left:70%;top:110px">⭐</div>'}];
+{c:"night",t:"Bintang Kecil bersinar semula di langit. Pengajarannya, kawan yang baik sentiasa membantu. Tamat! 🌟",s:'<div class="a spin" style="right:12%;top:12px">🌕</div><div class="a twinkle" style="left:20%;top:30px">⭐</div><div class="a twinkle" style="left:45%;top:80px">⭐</div><div class="a twinkle" style="left:70%;top:110px">⭐</div>',l:"Tolong-menolong itu amalan yang dituntut dalam Islam."}];
+var ADAB1=[
+{c:"grass",t:"Hana lapar dan mahu terus makan dengan tangan kiri. Ibu tersenyum, Hana, mari baca Bismillah dan guna tangan kanan.",s:'<div class="a" style="left:12%;bottom:30px">👧</div><div class="a hop" style="left:44%;bottom:30px">🍛</div><div class="a" style="right:12%;bottom:30px">👩</div>'},
+{c:"sky",t:"Hana membaca Bismillah, makan dengan tangan kanan dan tidak bercakap sambil mengunyah. Nasi pun terasa lebih sedap!",s:'<div class="a hop" style="left:30%;bottom:30px">👧</div><div class="a twinkle" style="left:58%;top:20px">✨</div><div class="a" style="left:58%;bottom:30px">🍚</div>'},
+{c:"night",t:"Selesai makan, Hana berkata Alhamdulillah dan membantu mengemas pinggan. Pengajarannya, adab membawa keberkatan. Tamat! 🤲",s:'<div class="a spin" style="right:12%;top:12px">🌕</div><div class="a hop" style="left:40%;bottom:30px">👧</div><div class="a twinkle" style="left:12%;top:30px">⭐</div>',l:"Baca Bismillah, makan tangan kanan, ucap Alhamdulillah."}];
+var ADAB2=[
+{c:"sky",t:"Amir ternampak Pak Cik Salleh mengangkat barang berat. Amir memberi salam dan bertanya, Boleh Amir tolong?",s:'<div class="a hop" style="left:15%;bottom:30px">👦</div><div class="a" style="left:48%;bottom:30px">👴</div><div class="a" style="right:10%;bottom:30px">📦</div>'},
+{c:"grass",t:"Pak Cik Salleh gembira. Mereka mengangkat barang bersama-sama sambil tersenyum.",s:'<div class="a swim" style="left:10%;bottom:30px">👦📦</div><div class="a" style="right:12%;bottom:30px">👴</div>'},
+{c:"night",t:"Pak Cik mendoakan Amir. Pengajarannya, menolong jiran ialah akhlak mulia. Tamat! 🌟",s:'<div class="a twinkle" style="left:20%;top:20px">🌟</div><div class="a hop" style="left:35%;bottom:30px">👦</div><div class="a" style="left:55%;bottom:30px">👴</div>',l:"Menghormati orang tua dan menolong jiran ialah akhlak mulia."}];
+var ADAB3=[
+{c:"grass",t:"Adam ternampak sebuah dompet tebal terjatuh di tepi jalan. Hatinya berbisik, Ambil sahaja, tiada siapa nampak!",s:'<div class="a hop" style="left:20%;bottom:30px">👦</div><div class="a" style="left:55%;bottom:24px">👛</div><div class="a twinkle" style="right:10%;top:12px">💭</div>'},
+{c:"sky",t:"Adam teringat, Allah Maha Melihat. Dia membuka dompet, melihat kad pengenalan, lalu mencari pemiliknya.",s:'<div class="a twinkle" style="left:10%;top:14px">👀</div><div class="a hop" style="left:40%;bottom:30px">👦</div><div class="a" style="right:12%;bottom:30px">🏠</div>'},
+{c:"night",t:"Pemilik dompet menangis gembira lalu memeluk Adam. Allah beri Adam pahala dan rezeki yang lebih baik. Tamat! 💛",s:'<div class="a spin" style="right:12%;top:12px">🌕</div><div class="a hop" style="left:25%;bottom:30px">👦👨</div><div class="a twinkle" style="left:12%;top:30px">⭐</div>',l:"Jujur dan amanah: Allah sentiasa melihat kita."}];
+var ADAB4=[
+{c:"night",t:"Subuh tiba. Azan berkumandang tetapi Sofia masih mahu tidur. Ibu mengejutkan dengan lembut, Sayang, solat itu lebih baik daripada tidur.",s:'<div class="a twinkle" style="left:12%;top:20px">💤</div><div class="a" style="left:40%;bottom:30px">🛏️</div><div class="a" style="right:12%;bottom:30px">👩</div>'},
+{c:"sky",t:"Sofia bangun, berwuduk dan solat berjemaah bersama keluarga. Hatinya terasa tenang dan segar.",s:'<div class="a hop" style="left:15%;bottom:30px">👧</div><div class="a" style="left:45%;bottom:30px">👨</div><div class="a twinkle" style="right:10%;top:10px">☀️</div>'},
+{c:"grass",t:"Sepanjang hari Sofia ceria di sekolah dan sentiasa tepat masa. Pengajarannya, solat membawa ketenangan dan disiplin. Tamat! 🕌",s:'<div class="a hop" style="left:30%;bottom:30px">👧</div><div class="a" style="right:12%;bottom:30px">🏫</div><div class="a twinkle" style="left:10%;top:20px">🌟</div>',l:"Solat membawa ketenangan, disiplin dan keberkatan."}];
+var ADAB5=[
+{c:"sky",t:"Zaid marah kerana ibu tidak membenarkan dia bermain game. Dia menjawab dengan nada tinggi.",s:'<div class="a" style="left:12%;bottom:30px">👦</div><div class="a twinkle" style="left:36%;top:30px">💢</div><div class="a" style="right:12%;bottom:30px">👩</div>'},
+{c:"grass",t:"Ayah mengingatkan, Jangan kata Ah! kepada ibu. Syurga itu di bawah telapak kaki ibu. Zaid terdiam dan sedar silapnya.",s:'<div class="a" style="left:12%;bottom:30px">👨</div><div class="a hop" style="left:42%;bottom:30px">👦</div><div class="a twinkle" style="right:12%;top:20px">💭</div>'},
+{c:"night",t:"Zaid memohon maaf dan mencium tangan ibu. Ibu tersenyum dan memeluknya. Pengajarannya, hormati dan sayangi ibu bapa. Tamat! 💕",s:'<div class="a spin" style="right:12%;top:12px">🌕</div><div class="a hop" style="left:30%;bottom:30px">👦👩</div><div class="a twinkle" style="left:10%;top:30px">❤️</div>',l:"Hormati ibu bapa dan jangan meninggikan suara kepada mereka."}];
 function storyMenu(){
- h(back()+'<h2>📖 Pilih Kisah</h2><div class="card"><button class="opt" data-i="0">🦌 Sang Kancil dan Buaya</button><button class="opt" data-i="1">🐢 Kura-kura dan Arnab</button><button class="opt" data-i="2">⭐ Bintang yang Hilang</button></div>');
- wireBack();
- var L=[[KANCIL,"Sang Kancil dan Buaya"],[KURA,"Kura-kura dan Arnab"],[BINTANG,"Bintang yang Hilang"]];
- [].forEach.call(document.querySelectorAll(".opt"),function(b){b.onclick=function(){var x=L[+b.dataset.i];STORY=x[0];STITLE=x[1];story(0)}});
+ var L=[[KANCIL,"Sang Kancil dan Buaya","🦌"],[KURA,"Kura-kura dan Arnab","🐢"],[BINTANG,"Bintang yang Hilang","⭐"],[ADAB1,"Hana dan Adab Makan","🍛"],[ADAB2,"Amir dan Jiran Baik","🤝"],[ADAB3,"Adam dan Dompet Jujur","👛"],[ADAB4,"Sofia dan Solat Subuh","🕌"],[ADAB5,"Zaid Sayang Ibu","❤️"]];
+ h(back()+'<h2>📖 Pilih Kisah</h2><div class="card" id="sl"></div>');wireBack();
+ L.forEach(function(x){var b=document.createElement("button");b.className="opt";b.textContent=x[2]+" "+x[1];b.onclick=function(){STORY=x[0];STITLE=x[1];story(0)};$("sl").appendChild(b)});
 }
 function story(n){
  if(typeof n!=="number")n=0;si=n;var s=STORY[si];
- h(back()+'<h2>📖 '+STITLE+'</h2><div class="stage '+s.c+'">'+s.s+'</div><div class="card"><div class="big" id="bg" style="min-height:110px;font-size:18px"></div></div>'+
+ h(back()+'<h2>📖 '+STITLE+'</h2><div class="stage '+s.c+'">'+s.s+'</div><div class="card"><div class="big" id="bg" style="min-height:110px;font-size:18px"></div><div id="ls"></div></div>'+
  '<div class="row"><button id="pv"'+(si===0?' disabled style="opacity:.4"':'')+'>← Kembali</button><button class="main-btn" style="margin:0" id="nx">'+(si===STORY.length-1?'Tamat 🎉':'Seterusnya →')+'</button></div>');
  wireBack();$("bg").textContent=s.t;
+ if(s.l){var d=document.createElement("div");d.className="lesson";d.textContent="🌟 Pelajaran: "+s.l;$("ls").appendChild(d)}
  $("pv").onclick=function(){if(si>0)story(si-1)};
  $("nx").onclick=function(){si===STORY.length-1?home():story(si+1)};
 }
-function exportCsv(){
- db.collection("players").get().then(function(snap){
-  var rows=[["Nama","Telefon","Peranan","Skor","Masa"]];
-  snap.docs.forEach(function(d){var x=d.data();rows.push([x.name,"'"+x.phone,x.peranan,x.skor,x.masa])});
-  var csv="\ufeff"+rows.map(function(r){return r.map(function(c){return '"'+String(c==null?"":c).replace(/"/g,'""')+'"'}).join(",")}).join("\n");
-  return claude.use("downloads").then(function(dl){return dl?dl.save({filename:"pemain-ceria-keluarga.csv",data:csv}):null});
- }).catch(function(){alert("Tidak dapat memuat turun senarai buat masa ini.")});
+function loop(f){raf=0;(function r(){if(raf===-1)return;f();if(raf!==-1)raf=requestAnimationFrame(r)})()}
+function mk(){h(back()+'<canvas id="cv" width="480" height="360" style="width:100%;border-radius:20px;touch-action:none;background:linear-gradient(#8fd3ff,#d8f4ff)"></canvas><p class="small">Mata dikira untuk ranking</p>');wireBack();return $("cv")}
+function over(k,v,again){cancelAnimationFrame(raf);raf=-1;clearInterval(tm);addScore(k,v);h(back()+'<div class="card"><div class="hero">🎮</div><h2>Tamat!</h2><p class="sub">Mata: '+v+' · Terbaik: '+P.sc[k]+'</p><button class="main-btn" id="ag">Main Lagi</button></div>');wireBack();$("ag").onclick=again}
+function gameMenu(){
+ var G=[["💰","Jutawan Ceria",jutawan],["🔢","Matematik Pantas",mathG],["🚀","Roket Tembak",roket],["🐦","Lastik Burung",lastik],["🐟","Sardina Lapar",sardina],["♟️","Strategi Batang Lilin",nim],["❌","Strategi Tic-Tac-Toe",xo]];
+ h(back()+'<h2>🎮 Pilih Game</h2><div class="card" id="gl"></div><p class="small">Gerakkan jari atau tetikus untuk mengawal. Mata terbaik dikira untuk ranking Solo dan Keluarga.</p>');wireBack();
+ G.forEach(function(x){var b=document.createElement("button");b.className="opt";b.textContent=x[0]+" "+x[1];b.onclick=function(){x[2]()};$("gl").appendChild(b)});
 }
-
+function mathG(){var t=30,s=0,m=P.role==="Ibu bapa"?30:P.role==="Remaja"?20:10,ans;
+ h(back()+'<div class="card"><p class="sub" id="hd"></p><div class="big" id="q" style="min-height:70px;font-size:34px"></div><div id="os"></div></div>');wireBack();
+ function hd(){$("hd").textContent="⏱ "+t+"s · ⭐ "+s}
+ function nq(){var a=1+Math.random()*m|0,b=1+Math.random()*m|0,o=["+","−","×"][Math.random()*3|0];
+  if(o==="−"&&b>a){var x=a;a=b;b=x}
+  if(o==="×"){a=1+Math.random()*(m>10?12:9)|0;b=1+Math.random()*9|0}
+  ans=o==="+"?a+b:o==="−"?a-b:a*b;$("q").textContent=a+" "+o+" "+b+" = ?";$("os").innerHTML="";
+  var op=[ans];while(op.length<4){var v=ans+(Math.random()*11|0)-5;if(op.indexOf(v)<0&&v>=0)op.push(v)}
+  shuffle(op).forEach(function(v){var bt=document.createElement("button");bt.className="opt";bt.textContent=v;bt.onclick=function(){if(v===ans)s++;else t=Math.max(0,t-2);hd();nq()};$("os").appendChild(bt)})}
+ nq();hd();tm=setInterval(function(){t--;hd();if(t<=0){over("math",s*2,mathG)}},1000)}
+function roket(){var c=mk(),g=c.getContext("2d"),px=240,B=[],E=[],s=0,L=3,f=0;
+ c.onpointermove=c.onpointerdown=function(e){var r=c.getBoundingClientRect();px=(e.clientX-r.left)*480/r.width};
+ loop(function(){f++;if(f%12===0)B.push({x:px,y:320});if(f%Math.max(16,50-s)===0)E.push({x:20+Math.random()*440,y:-20,v:1.5+Math.random()*1.5+s/25});
+  g.fillStyle="#0b1033";g.fillRect(0,0,480,360);g.font="30px serif";g.textAlign="center";
+  B.forEach(function(b){b.y-=7;g.fillText("🔸",b.x,b.y)});E.forEach(function(e){e.y+=e.v;g.fillText("☄️",e.x,e.y)});
+  E=E.filter(function(e){var hit=false;B.forEach(function(b){if(!b.d&&Math.abs(b.x-e.x)<24&&Math.abs(b.y-e.y)<24){b.d=1;hit=true}});if(hit)s++;if(e.y>350){L--;return false}return !hit});
+  B=B.filter(function(b){return !b.d&&b.y>-10});
+  g.fillText("🚀",px,350);g.font="16px sans-serif";g.fillStyle="#fff";g.fillText("⭐"+s+"   ❤️"+L,70,22);
+  if(L<=0)over("roket",s,roket)})}
+function lastik(){var c=mk(),g=c.getContext("2d"),S={x:90,y:250},bp={x:90,y:250},b=null,dr=false,left=5,s=0,pg=[];
+ function np(){pg=[];for(var i=0;i<3;i++)pg.push({x:300+Math.random()*150,y:140+Math.random()*160})}np();
+ function pt(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)*480/r.width,y=(e.clientY-r.top)*360/r.height,dx=x-S.x,dy=y-S.y,d=Math.hypot(dx,dy);if(d>70){dx*=70/d;dy*=70/d}bp={x:S.x+dx,y:S.y+dy}}
+ c.onpointerdown=function(e){if(!b){dr=true;pt(e)}};c.onpointermove=function(e){if(dr)pt(e)};
+ c.onpointerup=function(){if(dr){dr=false;b={x:bp.x,y:bp.y,vx:(S.x-bp.x)/7,vy:(S.y-bp.y)/7};left--}};
+ loop(function(){g.clearRect(0,0,480,360);g.fillStyle="#7ed48a";g.fillRect(0,335,480,25);g.font="34px serif";g.textAlign="center";
+  pg.forEach(function(p){g.fillText("🐷",p.x,p.y);g.fillText("🧱",p.x,p.y+34)});
+  if(dr){g.fillStyle="#fff";var x=bp.x,y=bp.y,vx=(S.x-bp.x)/7,vy=(S.y-bp.y)/7;for(var i=0;i<20;i++){vy+=.25;x+=vx;y+=vy;if(i%2)g.fillRect(x,y,4,4)}}
+  var o=b||bp;g.fillText("🐦",o.x,o.y);
+  if(b){b.vy+=.25;b.x+=b.vx;b.y+=b.vy;pg=pg.filter(function(p){if(Math.hypot(p.x-b.x,p.y-b.y)<30){s+=10;return false}return true});
+   if(b.y>335||b.x>500||b.x<-20){b=null;bp={x:S.x,y:S.y};if(!pg.length){s+=20;left+=2;np()}}}
+  g.font="16px sans-serif";g.fillStyle="#222";g.fillText("⭐"+s+"   🐦 x"+left,70,22);
+  if(left<=0&&!b)over("lastik",s,lastik)})}
+function sardina(){var c=mk(),g=c.getContext("2d"),x=240,y=180,tx=240,ty=180,z=16,F=[],s=0,f=0;
+ c.onpointermove=c.onpointerdown=function(e){var r=c.getBoundingClientRect();tx=(e.clientX-r.left)*480/r.width;ty=(e.clientY-r.top)*360/r.height};
+ loop(function(){f++;x+=(tx-x)*.1;y+=(ty-y)*.1;
+  if(f%22===0){var l=Math.random()<.5;F.push({x:l?-40:520,y:20+Math.random()*320,r:6+Math.random()*(z*1.6+6),v:(l?1:-1)*(1+Math.random()*1.8)})}
+  g.fillStyle="#1d6fa5";g.fillRect(0,0,480,360);g.textAlign="center";var dead=false;
+  F=F.filter(function(q){q.x+=q.v;if(q.x<-60||q.x>540)return false;g.font=q.r*2+"px serif";g.fillText(q.r>z?"🦈":"🐠",q.x,q.y+q.r*.6);
+   if(Math.hypot(q.x-x,q.y-y)<(q.r+z)*.7){if(q.r<z*.95){z=Math.min(60,z+q.r*.1);s+=Math.round(q.r);return false}dead=true}return true});
+  g.font=z*2+"px serif";g.fillText("🐟",x,y+z*.6);g.font="16px sans-serif";g.fillStyle="#fff";g.fillText("⭐"+s,40,22);
+  if(dead)over("sardina",s,sardina)})}
+function nim(r){r=r||0;var n=21;
+ h(back()+'<div class="card"><h2>Ronde '+(r+1)+'</h2><p class="sub">Ambil 1 hingga 3 lilin. Siapa ambil lilin terakhir, KALAH!</p><div class="big" style="font-size:26px;min-height:70px;word-break:break-all" id="st"></div><div class="row" id="bt"></div><p class="small" id="mg"></p></div>');wireBack();
+ function show(){$("st").textContent="🕯️".repeat(n)+" ("+n+")";var B=$("bt");B.innerHTML="";
+  [1,2,3].forEach(function(k){var b=document.createElement("button");b.textContent="Ambil "+k;b.disabled=k>n;
+   b.onclick=function(){n-=k;if(n<=0){over("strategi",r*10,function(){nim(0)});return}
+    var t=(n-1)%4;if(Math.random()>=Math.min(.3+.2*r,1)||t===0)t=1+Math.random()*Math.min(3,n)|0;t=Math.min(t,n);n-=t;
+    if(n<=0){$("mg").textContent="Komputer ambil lilin terakhir. Kamu menang ronde ini! 🎉";setTimeout(function(){nim(r+1)},1400);return}
+    $("mg").textContent="Komputer ambil "+t;show()};B.appendChild(b)})}
+ show()}
+function xo(){var b=["","","","","","","","",""],done=false,W=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+ h(back()+'<div class="card"><h2>❌⭕ Tic-Tac-Toe</h2><p class="sub" id="mg">Kamu ❌. Cuba kalahkan komputer! Menang 30 mata, seri 10.</p><div class="xo" id="bd"></div></div>');wireBack();
+ function win(s){for(var i=0;i<8;i++){var w=W[i];if(s[w[0]]&&s[w[0]]===s[w[1]]&&s[w[0]]===s[w[2]])return s[w[0]]}return s.indexOf("")<0?"d":""}
+ function mm(s,p,d){var w=win(s);if(w==="O")return 10-d;if(w==="X")return d-10;if(w==="d")return 0;var best=p==="O"?-99:99;
+  for(var i=0;i<9;i++)if(!s[i]){s[i]=p;var v=mm(s,p==="O"?"X":"O",d+1);s[i]="";best=p==="O"?Math.max(best,v):Math.min(best,v)}return best}
+ function cpu(){var m=[],i;for(i=0;i<9;i++)if(!b[i])m.push(i);if(!m.length)return;var pick=m[Math.random()*m.length|0];
+  if(Math.random()>=.35){var best=-99;m.forEach(function(i){b[i]="O";var v=mm(b,"X",1);b[i]="";if(v>best){best=v;pick=i}})}b[pick]="O"}
+ function end(){var w=win(b);if(!w)return false;done=true;draw();
+  $("mg").textContent=w==="X"?"Kamu menang! 🎉":w==="O"?"Komputer menang 😅":"Seri! 🤝";
+  setTimeout(function(){over("xo",w==="X"?30:w==="d"?10:0,xo)},1200);return true}
+ function draw(){var bd=$("bd");bd.innerHTML="";b.forEach(function(v,i){var x=document.createElement("button");x.textContent=v==="X"?"❌":v==="O"?"⭕":"";
+  x.onclick=function(){if(done||b[i])return;b[i]="X";if(end())return;cpu();if(end())return;draw()};bd.appendChild(x)})}
+ draw()}
+function jutawan(){var LD=[10,20,30,50,100,150,250,400,600,1000],lv=0,U={},cur,hid=[],busy=0,easy=shuffle(ALLQ.concat(ADABQ)),hard=shuffle(IQ),qs=easy.slice(0,6).concat(hard.slice(0,4)),sp=[easy.slice(6),hard.slice(4)];
+ function safe(){return lv>=5?LD[4]:0}
+ function fin(m,v){$("jm").textContent=m;setTimeout(function(){if($("jm"))over("jutawan",v,jutawan)},2200)}
+ function nxt(){cur=qs[lv];hid=[];busy=0;draw()}
+ function draw(){var ld="";for(var i=0;i<10;i++)ld+='<i class="'+(i<lv?"d":i===lv?"c":"")+'"></i>';
+  h(back()+'<div class="card"><p class="sub" id="jh"></p><div class="ld">'+ld+'</div><div class="big" id="jq" style="min-height:80px"></div><div id="jo"></div><div class="row" id="jl"></div><p class="sub" id="jm"></p><div id="jx"></div><button id="jw" style="width:100%;margin-top:8px">💼 Berhenti dan ambil ⭐'+(lv?LD[lv-1]:0)+'</button></div>');
+  wireBack();$("jh").textContent="Soalan "+(lv+1)+" / 10 · Hadiah ⭐"+LD[lv]+" · Selamat ⭐"+safe();$("jq").textContent=cur.q;
+  cur.o.forEach(function(t,i){var b=document.createElement("button");b.className="opt";b.textContent="ABCD"[i]+". "+t;if(hid.indexOf(i)>=0){b.style.visibility="hidden";b.disabled=true}b.onclick=function(){pick(i,b)};$("jo").appendChild(b)});
+  [["50:50","s"],["👪 Keluarga","f"],["🔄 Tukar","t"]].forEach(function(x){var b=document.createElement("button");b.textContent=x[0];b.style.fontSize="14px";if(U[x[1]]){b.disabled=true;b.style.opacity=".35"}b.onclick=function(){life(x[1])};$("jl").appendChild(b)});
+  $("jw").onclick=function(){if(!busy){busy=1;var v=lv?LD[lv-1]:0;fin("Kamu berhenti dan bawa pulang ⭐"+v,v)}}}
+ function life(k){if(busy||U[k])return;U[k]=1;var m="";
+  if(k==="s"){hid=shuffle([0,1,2,3].filter(function(i){return i!==cur.a})).slice(0,2);m="50:50: dua jawapan salah dibuang!"}
+  else if(k==="t"){var s=sp[lv<6?0:1];if(s.length)cur=qs[lv]=s.pop();hid=[];m="Soalan ditukar!"}
+  else{var v=[0,1,2,3].filter(function(i){return hid.indexOf(i)<0}),c=Math.round(((lv<6?.65:.4)+Math.random()*.2)*100),w=v.filter(function(i){return i!==cur.a}),e=Math.floor((100-c)/w.length),o=[];
+   v.forEach(function(i){o.push("ABCD"[i]+" "+(i===cur.a?c:e)+"%")});m="👪 Undian keluarga: "+o.join(" · ")}
+  draw();$("jm").textContent=m}
+ function pick(i,b){if(busy)return;busy=1;[].forEach.call($("jo").children,function(x){x.disabled=true});b.style.background="#ffb020";b.style.color="#fff";$("jm").textContent="Jawapan dikunci... 🤞";
+  setTimeout(function(){if(!$("jo"))return;var os=$("jo").children;[].forEach.call(os,function(x){x.style.background="";x.style.color=""});os[cur.a].className="opt good";
+   if(i===cur.a){lv++;if(lv>=10)return fin("🏆 JUTAWAN CERIA! Semua betul!",LD[9]);
+    $("jm").textContent=(cur.e?"✅ "+cur.e:"✅ Betul! Hadiah ⭐"+LD[lv-1])+(lv===5?" · Titik selamat dicapai! 🛟":"");
+    $("jx").innerHTML='<button class="main-btn" id="jn">Soalan seterusnya →</button>';$("jn").onclick=nxt}
+   else{b.className="opt bad";fin("❌ Salah! Kamu bawa pulang ⭐"+safe(),safe())}},900)}
+ nxt()}
+var GN={all:"Semua game",jutawan:"Jutawan Ceria",quiz:"Kuiz",iq:"Kuiz IQ",adab:"Adab & Agama",math:"Matematik",roket:"Roket Tembak",lastik:"Lastik Burung",sardina:"Sardina Lapar",strategi:"Batang Lilin",xo:"Tic-Tac-Toe"};
+function rank(){
+ h(back()+'<h2>🏆 Ranking</h2><div class="roles"><button class="on" id="r1">Solo</button><button id="r2">Keluarga</button></div><select id="gs"></select><div class="card" id="lb"><p class="sub">Memuatkan...</p></div><p class="small" id="me"></p>');wireBack();
+ $("me").textContent="Mata anda: "+total()+(P.fam?" · Keluarga: "+P.fam:"");var L=[],mode=0;
+ for(var k in GN){var o=document.createElement("option");o.value=k;o.textContent=GN[k];$("gs").appendChild(o)}
+ function pts(p){var g=$("gs").value;if(g==="all"||!p.sc)return p.m;return p.sc[g]||0}
+ function show(k){mode=k;$("r1").className=k?"":"on";$("r2").className=k?"on":"";var R;
+  if(k){var m={};L.forEach(function(p){var f=(p.f||"").trim();if(!f)return;var q=f.toLowerCase();m[q]=m[q]||{n:f,m:0,c:0};m[q].m+=pts(p);m[q].c++});R=Object.keys(m).map(function(q){return m[q]})}
+  else R=L.map(function(p){return{n:p.n,m:pts(p),c:0}});
+  R.sort(function(a,b){return b.m-a.m});R=R.slice(0,10);var lb=$("lb");lb.innerHTML="";
+  if(!R.length){lb.innerHTML='<p class="sub">Belum ada data.</p>';return}
+  R.forEach(function(p,i){var d=document.createElement("div");d.className="rk";var a=document.createElement("span"),b=document.createElement("b");a.textContent=(["🥇","🥈","🥉"][i]||(i+1)+".")+" "+p.n+(p.c?" ("+p.c+" ahli)":"");b.textContent=p.m;d.appendChild(a);d.appendChild(b);lb.appendChild(d)})}
+ $("r1").onclick=function(){show(0)};$("r2").onclick=function(){show(1)};$("gs").onchange=function(){show(mode)};
+ if(SHEET_URL.indexOf("http")!==0){$("lb").textContent="Ranking belum dihubungkan.";return}
+ fetch(SHEET_URL+"?a=rank").then(function(r){return r.json()}).then(function(d){L=d.players||[];show(0)}).catch(function(){$("lb").textContent="Ranking belum dapat dimuatkan. Cuba lagi nanti."})}
 reg();
-if(window.claude&&claude.use){
- claude.use("user").then(function(u){user=u;if(u){u.isOwner().then(function(o){isOwner=o});u.id().then(function(i){uid=i})}}).catch(function(){});
- claude.use("db").then(function(d){db=d}).catch(function(){});
-}
 })();
 </script>
 </body>
